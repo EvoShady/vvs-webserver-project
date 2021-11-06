@@ -5,59 +5,43 @@ import java.io.*;
 
 public class WebServer extends Thread {
 	protected Socket clientSocket;
+	static final String DEFAULT_FILE = "/a";
 
-	public static void main(String[] args) throws IOException {
-		ServerSocket serverSocket = null;
-
-		try {
-			serverSocket = new ServerSocket(10008);
-			System.out.println("Connection Socket Created");
-			try {
-				while (true) {
-					System.out.println("Waiting for Connection");
-					new WebServer(serverSocket.accept());
-				}
-			} catch (IOException e) {
-				System.err.println("Accept failed.");
-				System.exit(1);
-			}
-		} catch (IOException e) {
-			System.err.println("Could not listen on port: 10008.");
-			System.exit(1);
-		} finally {
-			try {
-				serverSocket.close();
-			} catch (IOException e) {
-				System.err.println("Could not close port: 10008.");
-				System.exit(1);
-			}
-		}
-	}
-
-	private WebServer(Socket clientSoc) {
+	public WebServer(Socket clientSoc) {
 		clientSocket = clientSoc;
 		start();
 	}
 
 	public void run() {
-		String file = null;
+		String fileRequested;
 
 		System.out.println("New Communication Thread Started");
 
 		try {
-			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),
-					true);
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					clientSocket.getInputStream()));
+			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			BufferedOutputStream dataOut = new BufferedOutputStream(clientSocket.getOutputStream());
 
 			String inputLine;
 
-			//out.println("HTTP/1.0 200 OK\n");
 			inputLine = in.readLine();
-			String[] reqArray = inputLine.split(" ");
-			file = reqArray[1];
-			System.out.println("Server: " + file);
-			out.println(inputLine);
+			String[] requestArray = inputLine.split(" ");
+
+			if(requestArray[1].equals("/") ){
+				fileRequested = DEFAULT_FILE;
+			}else{
+				fileRequested = requestArray[1];
+			}
+
+			File file = new File("src/TestSite" + fileRequested + ".html");
+			int fileLength = (int) file.length();
+
+			byte[] fileData = readFile(file, fileLength);
+
+			out.println("HTTP/1.0 200 OK\n");
+
+			dataOut.write(fileData, 0, fileLength);
+			dataOut.flush();
 
 			out.close();
 			in.close();
@@ -67,4 +51,20 @@ public class WebServer extends Thread {
 			System.exit(1);
 		}
 	}
+
+	private byte[] readFile(File file, int fileLength) throws IOException {
+		FileInputStream fileIn = null;
+		byte[] fileData = new byte[fileLength];
+
+		try {
+			fileIn = new FileInputStream(file);
+			fileIn.read(fileData);
+		} finally {
+			if (fileIn != null)
+				fileIn.close();
+		}
+
+		return fileData;
+	}
+
 }
