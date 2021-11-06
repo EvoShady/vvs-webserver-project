@@ -40,6 +40,8 @@ public class WebServer extends Thread {
 	}
 
 	public void run() {
+		String file = null;
+
 		System.out.println("New Communication Thread Started");
 
 		try {
@@ -49,14 +51,13 @@ public class WebServer extends Thread {
 					clientSocket.getInputStream()));
 
 			String inputLine;
-			
-			while ((inputLine = in.readLine()) != null) {
-				System.out.println("Server: " + inputLine);
-				out.println(inputLine);
 
-				if (inputLine.trim().equals(""))
-					break;
-			}
+			//out.println("HTTP/1.0 200 OK\n");
+			inputLine = in.readLine();
+			String[] reqArray = inputLine.split(" ");
+			file = reqArray[1];
+			System.out.println("Server: " + file);
+			out.println(inputLine);
 
 			out.close();
 			in.close();
