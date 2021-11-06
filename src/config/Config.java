@@ -8,7 +8,6 @@ import java.net.ServerSocket;
 
 public class Config implements Runnable {
     ServerSocket serverSocket = null;
-    private static int serverState;
 
     public void startServer(){
         try {
