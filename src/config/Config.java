@@ -83,6 +83,9 @@ public class Config implements Runnable {
             if(Main.serverState == 3){
                 stopServer();
             }
+            if(Main.serverState == 4){
+                break;
+            }
         }
     }
 
