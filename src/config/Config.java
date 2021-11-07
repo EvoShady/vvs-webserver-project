@@ -14,9 +14,36 @@ public class Config implements Runnable {
             serverSocket = new ServerSocket(12345);
             System.out.println("Connection Socket Created");
             try {
-                while (Main.serverState != 3) {
+                while (Main.serverState == 1) {
                     System.out.println("Waiting for Connection");
-                    new WebServer(serverSocket.accept());
+                    new WebServer(serverSocket.accept(), false);
+                }
+            } catch (IOException e) {
+                System.err.println("Accept failed.");
+                System.exit(1);
+            }
+        } catch (IOException e) {
+            System.err.println("Could not listen on port: 12345.");
+            System.exit(1);
+        } finally {
+            try {
+                serverSocket.close();
+                System.out.println("Server Closed");
+            } catch (IOException e) {
+                System.err.println("Could not close port: 12345.");
+                System.exit(1);
+            }
+        }
+    }
+
+    public void activateOrDeactivateMaintenanceMode(){
+        try {
+            serverSocket = new ServerSocket(12345);
+            System.out.println("Connection Socket Created");
+            try {
+                while (Main.serverState == 2) {
+                    System.out.println("Waiting for Connection");
+                    new WebServer(serverSocket.accept(), true);
                 }
             } catch (IOException e) {
                 System.err.println("Accept failed.");
@@ -26,10 +53,15 @@ public class Config implements Runnable {
             System.err.println("Could not listen on port: 12345.");
             System.exit(1);
         }
-    }
-
-    public void activateOrDeactivateMaintenanceMode(){
-
+        finally {
+            try {
+                serverSocket.close();
+                System.out.println("Server Closed");
+            } catch (IOException e) {
+                System.err.println("Could not close port: 12345.");
+                System.exit(1);
+            }
+        }
     }
 
     public void stopServer(){
@@ -46,6 +78,9 @@ public class Config implements Runnable {
         while(true){
             if (Main.serverState == 1){
                 startServer();
+            }
+            if (Main.serverState == 2){
+                activateOrDeactivateMaintenanceMode();
             }
             if(Main.serverState == 3){
                 stopServer();

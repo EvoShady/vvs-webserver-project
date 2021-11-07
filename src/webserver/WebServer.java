@@ -6,16 +6,17 @@ import java.io.*;
 public class WebServer extends Thread {
 	protected Socket clientSocket;
 	static final String DEFAULT_FILE = "/a";
+	static final String MAINTENANCE_FILE = "/maintenance";
+	private volatile boolean maintenanceMode = true;
 
-	public WebServer(Socket clientSoc) {
+	public WebServer(Socket clientSoc, boolean maintenanceMode) {
 		clientSocket = clientSoc;
+		this.maintenanceMode = maintenanceMode;
 		start();
 	}
 
 	public void run() {
 		String fileRequested;
-
-		System.out.println("New Communication Thread Started");
 
 		try {
 			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -27,11 +28,7 @@ public class WebServer extends Thread {
 			inputLine = in.readLine();
 			String[] requestArray = inputLine.split(" ");
 
-			if(requestArray[1].equals("/") ){
-				fileRequested = DEFAULT_FILE;
-			}else{
-				fileRequested = requestArray[1];
-			}
+			fileRequested = determineServerServingPage(requestArray[1]);
 
 			File file = new File("src/TestSite" + fileRequested + ".html");
 			int fileLength = (int) file.length();
@@ -67,4 +64,17 @@ public class WebServer extends Thread {
 		return fileData;
 	}
 
+	private String determineServerServingPage(String s) {
+		if (maintenanceMode == true){
+			return MAINTENANCE_FILE;
+		}
+		if (s.equals("/")){
+			return DEFAULT_FILE;
+		}
+		return s;
+	}
+
+	synchronized public void setMaintenanceMode(boolean maintenanceMode) {
+		this.maintenanceMode = maintenanceMode;
+	}
 }
