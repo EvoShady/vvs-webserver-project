@@ -5,7 +5,7 @@ import java.io.*;
 
 public class WebServer extends Thread {
 	protected Socket clientSocket;
-	static final String DEFAULT_FILE = "/a.html";
+	static final String DEFAULT_FILE = "/index.html";
 	static final String MAINTENANCE_FILE = "/maintenance.html";
 	private volatile boolean maintenanceMode;
 
@@ -41,6 +41,7 @@ public class WebServer extends Thread {
 
 			inputLine = in.readLine();
 			String[] requestArray = inputLine.split(" ");
+			System.out.println(requestArray[1]);
 
 			fileRequested = determineServerServingPage(requestArray[1]);
 
@@ -102,7 +103,7 @@ public class WebServer extends Thread {
 		int fileLength = (int) file.length();
 		byte[] fileData = readFile(file, fileLength);
 
-		out.println("HTTP/1.1 404 File Not Found\n");
+		out.println("HTTP/1.0 404 File Not Found\n");
 
 		dataOut.write(fileData, 0, fileLength);
 		dataOut.flush();
