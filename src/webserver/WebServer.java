@@ -70,7 +70,7 @@ public class WebServer extends Thread {
 		}
 	}
 
-	private byte[] readFile(File file, int fileLength) throws IOException {
+	public byte[] readFile(File file, int fileLength) throws IOException {
 		FileInputStream fileIn = null;
 		byte[] fileData = new byte[fileLength];
 
@@ -85,7 +85,7 @@ public class WebServer extends Thread {
 		return fileData;
 	}
 
-	private String determineServerServingPage(String s) {
+	public String determineServerServingPage(String s) {
 		if (maintenanceMode){
 			return MAINTENANCE_FILE;
 		}
@@ -98,7 +98,7 @@ public class WebServer extends Thread {
 		return s + ".html";
 	}
 
-	private void fileNotFound(PrintWriter out, OutputStream dataOut, String fileRequested) throws IOException {
+	public void fileNotFound(PrintWriter out, OutputStream dataOut, String fileRequested) throws IOException {
 		File file = new File(fileRequested);
 		int fileLength = (int) file.length();
 		byte[] fileData = readFile(file, fileLength);
@@ -109,4 +109,11 @@ public class WebServer extends Thread {
 		dataOut.flush();
 	}
 
+	public boolean isMaintenanceMode() {
+		return maintenanceMode;
+	}
+
+	public void setMaintenanceMode(boolean maintenanceMode) {
+		this.maintenanceMode = maintenanceMode;
+	}
 }

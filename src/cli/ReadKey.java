@@ -2,7 +2,7 @@ package cli;
 
 import java.util.Scanner;
 
-class ReadKey implements Runnable {
+public class ReadKey implements Runnable {
 
     static Thread thread;
 
