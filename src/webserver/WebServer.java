@@ -5,9 +5,9 @@ import java.io.*;
 
 public class WebServer extends Thread {
 	protected Socket clientSocket;
-	static final String DEFAULT_FILE = "/a";
-	static final String MAINTENANCE_FILE = "/maintenance";
-	private volatile boolean maintenanceMode = true;
+	static final String DEFAULT_FILE = "/a.html";
+	static final String MAINTENANCE_FILE = "/maintenance.html";
+	private volatile boolean maintenanceMode;
 
 	public WebServer(Socket clientSoc, boolean maintenanceMode) {
 		clientSocket = clientSoc;
@@ -16,12 +16,26 @@ public class WebServer extends Thread {
 	}
 
 	public void run() {
-		String fileRequested;
-
+		String fileRequested = null;
+		PrintWriter out = null;
 		try {
-			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			BufferedOutputStream dataOut = new BufferedOutputStream(clientSocket.getOutputStream());
+			out = new PrintWriter(clientSocket.getOutputStream(), true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		BufferedOutputStream dataOut = null;
+		try {
+			dataOut = new BufferedOutputStream(clientSocket.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
 
 			String inputLine;
 
@@ -30,7 +44,7 @@ public class WebServer extends Thread {
 
 			fileRequested = determineServerServingPage(requestArray[1]);
 
-			File file = new File("src/TestSite" + fileRequested + ".html");
+			File file = new File("src/TestSite" + fileRequested);
 			int fileLength = (int) file.length();
 
 			byte[] fileData = readFile(file, fileLength);
@@ -43,6 +57,12 @@ public class WebServer extends Thread {
 			out.close();
 			in.close();
 			clientSocket.close();
+		} catch (FileNotFoundException fileNotFoundException) {
+			try {
+				fileNotFound(out, dataOut, fileRequested);
+			} catch (IOException ioe) {
+				System.err.println("Error with file not found exception : " + ioe.getMessage());
+			}
 		} catch (IOException e) {
 			System.err.println("Problem with Communication Server");
 			System.exit(1);
@@ -65,16 +85,27 @@ public class WebServer extends Thread {
 	}
 
 	private String determineServerServingPage(String s) {
-		if (maintenanceMode == true){
+		if (maintenanceMode){
 			return MAINTENANCE_FILE;
 		}
 		if (s.equals("/")){
 			return DEFAULT_FILE;
 		}
-		return s;
+		if(s.endsWith(".html") || s.endsWith(".jpg") || s.endsWith(".txt")) {
+			return s;
+		}
+		return s + ".html";
 	}
 
-	synchronized public void setMaintenanceMode(boolean maintenanceMode) {
-		this.maintenanceMode = maintenanceMode;
+	private void fileNotFound(PrintWriter out, OutputStream dataOut, String fileRequested) throws IOException {
+		File file = new File(fileRequested);
+		int fileLength = (int) file.length();
+		byte[] fileData = readFile(file, fileLength);
+
+		out.println("HTTP/1.1 404 File Not Found\n");
+
+		dataOut.write(fileData, 0, fileLength);
+		dataOut.flush();
 	}
+
 }

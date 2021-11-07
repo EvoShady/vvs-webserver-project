@@ -15,7 +15,6 @@ public class Config implements Runnable {
             System.out.println("Connection Socket Created");
             try {
                 while (Main.serverState == 1) {
-                    System.out.println("Waiting for Connection");
                     new WebServer(serverSocket.accept(), false);
                 }
             } catch (IOException e) {
@@ -42,7 +41,6 @@ public class Config implements Runnable {
             System.out.println("Connection Socket Created");
             try {
                 while (Main.serverState == 2) {
-                    System.out.println("Waiting for Connection");
                     new WebServer(serverSocket.accept(), true);
                 }
             } catch (IOException e) {
