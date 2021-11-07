@@ -7,6 +7,14 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 public class Config implements Runnable {
+    public ServerSocket getServerSocket() {
+        return serverSocket;
+    }
+
+    public void setServerSocket(ServerSocket serverSocket) {
+        this.serverSocket = serverSocket;
+    }
+
     ServerSocket serverSocket = null;
 
     public void startServer(){
@@ -35,7 +43,7 @@ public class Config implements Runnable {
         }
     }
 
-    public void activateOrDeactivateMaintenanceMode(){
+    public void activateMaintenanceMode(){
         try {
             serverSocket = new ServerSocket(12345);
             System.out.println("Connection Socket Created");
@@ -78,7 +86,7 @@ public class Config implements Runnable {
                 startServer();
             }
             if (Main.serverState == 2){
-                activateOrDeactivateMaintenanceMode();
+                activateMaintenanceMode();
             }
             if(Main.serverState == 3){
                 stopServer();

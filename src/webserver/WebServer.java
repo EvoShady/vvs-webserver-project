@@ -9,13 +9,17 @@ public class WebServer extends Thread {
 	static final String MAINTENANCE_FILE = "/maintenance.html";
 	private volatile boolean maintenanceMode;
 
+	public WebServer() {
+
+	}
+
 	public WebServer(Socket clientSoc, boolean maintenanceMode) {
 		clientSocket = clientSoc;
 		this.maintenanceMode = maintenanceMode;
 		start();
 	}
 
-	public void run() {
+    public void run() {
 		String fileRequested = null;
 		PrintWriter out = null;
 		try {
