@@ -16,15 +16,15 @@ class ReadKey implements Runnable {
     @Override
     public void run() {
         while (true) {
-            System.out.println("1 - start server\n" +
-                    "2 - activate/deactivate maintenance mode\n" +
+            System.out.println("1 - start server normally\n" +
+                    "2 - activate maintenance mode\n" +
                     "3 - stop server\n" +
-                    "4 - exit\n");
+                    "4 - exit console\n");
 
             Scanner scan = new Scanner(System.in);
             int choice = scan.nextInt();
             Main.serverState = choice;
-            System.out.println(Main.serverState);
+
             if (choice == 4)
                 break;
         }
