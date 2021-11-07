@@ -15,7 +15,7 @@ x -> not done
 
 # Tests classes implemented:
 - ReadKeyTest ✓
-- cliTest ~
+- mainTest ~
 - configTest ~
 - guiTests x
 - WebServerTest ~
