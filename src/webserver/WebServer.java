@@ -41,8 +41,9 @@ public class WebServer extends Thread {
 		}
 		try {
 
-			String inputLine;
+			String inputLine = "";
 
+			assert in != null;
 			inputLine = in.readLine();
 			String[] requestArray = inputLine.split(" ");
 			System.out.println(requestArray[1]);
@@ -54,8 +55,10 @@ public class WebServer extends Thread {
 
 			byte[] fileData = readFile(file, fileLength);
 
+			assert out != null;
 			out.println("HTTP/1.0 200 OK\n");
 
+			assert dataOut != null;
 			dataOut.write(fileData, 0, fileLength);
 			dataOut.flush();
 
@@ -70,7 +73,7 @@ public class WebServer extends Thread {
 			}
 		} catch (IOException e) {
 			System.err.println("Problem with Communication Server");
-			System.exit(1);
+			throw new RuntimeException();
 		}
 	}
 

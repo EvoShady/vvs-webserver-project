@@ -6,7 +6,7 @@ public class ReadKey implements Runnable {
 
     static Thread thread;
 
-    public void start() {
+    synchronized public void start() {
         if (thread == null) {
             thread = new Thread(this);
             thread.start();
@@ -23,7 +23,7 @@ public class ReadKey implements Runnable {
 
             Scanner scan = new Scanner(System.in);
             int choice = scan.nextInt();
-            Main.serverState = choice;
+            Main.setServerState(choice);
 
             if (choice == 4)
                 break;
