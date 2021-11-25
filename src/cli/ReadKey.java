@@ -6,7 +6,7 @@ public class ReadKey implements Runnable {
 
     static Thread thread;
 
-    public void start() {
+    synchronized public void start() {
         if (thread == null) {
             thread = new Thread(this);
             thread.start();
