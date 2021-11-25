@@ -23,7 +23,7 @@ public class ReadKey implements Runnable {
 
             Scanner scan = new Scanner(System.in);
             int choice = scan.nextInt();
-            Main.serverState = choice;
+            Main.setServerState(choice);
 
             if (choice == 4)
                 break;

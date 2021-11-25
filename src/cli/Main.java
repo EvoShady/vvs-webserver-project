@@ -12,7 +12,10 @@ public class Main{
 
         config.start();
         readKey.start();
+    }
 
+    public static synchronized void setServerState(int serverState){
+        Main.serverState = serverState;
     }
 }
 
