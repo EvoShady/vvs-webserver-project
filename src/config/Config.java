@@ -27,18 +27,18 @@ public class Config implements Runnable {
                 }
             } catch (IOException e) {
                 System.err.println("Accept failed.");
-                System.exit(1);
+                throw new RuntimeException();
             }
         } catch (IOException e) {
             System.err.println("Could not listen on port: 12345.");
-            System.exit(1);
+            throw new RuntimeException();
         } finally {
             try {
                 serverSocket.close();
                 System.out.println("Server Closed");
             } catch (IOException e) {
                 System.err.println("Could not close port: 12345.");
-                System.exit(1);
+                throw new RuntimeException();
             }
         }
     }
@@ -53,11 +53,11 @@ public class Config implements Runnable {
                 }
             } catch (IOException e) {
                 System.err.println("Accept failed.");
-                System.exit(1);
+                throw new RuntimeException();
             }
         } catch (IOException e) {
             System.err.println("Could not listen on port: 12345.");
-            System.exit(1);
+            throw new RuntimeException();
         }
         finally {
             try {
@@ -65,7 +65,7 @@ public class Config implements Runnable {
                 System.out.println("Server Closed");
             } catch (IOException e) {
                 System.err.println("Could not close port: 12345.");
-                System.exit(1);
+                throw new RuntimeException();
             }
         }
     }
@@ -75,7 +75,7 @@ public class Config implements Runnable {
             serverSocket.close();
         } catch (IOException e) {
             System.err.println("Could not close port: 12345.");
-            System.exit(1);
+            throw new RuntimeException();
         }
     }
 

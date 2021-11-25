@@ -70,7 +70,7 @@ public class WebServer extends Thread {
 			}
 		} catch (IOException e) {
 			System.err.println("Problem with Communication Server");
-			System.exit(1);
+			throw new RuntimeException();
 		}
 	}
 
