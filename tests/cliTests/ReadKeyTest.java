@@ -1,7 +1,7 @@
 package cliTests;
 
-import cli.Main;
 import cli.ReadKey;
+import config.Config;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +31,6 @@ public class ReadKeyTest {
         System.setIn(in);
         readKey.run();
 
-        assertEquals(4, Main.serverState);
+        assertEquals(4, Config.serverState);
     }
 }

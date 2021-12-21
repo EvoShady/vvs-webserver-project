@@ -3,7 +3,6 @@ package cli;
 import config.Config;
 
 public class Main{
-    public volatile static int serverState;
 
     public static void main(String[] args) {
 
@@ -14,8 +13,5 @@ public class Main{
         readKey.start();
     }
 
-    public static synchronized void setServerState(int serverState){
-        Main.serverState = serverState;
-    }
 }
 

@@ -1,12 +1,17 @@
 package config;
 
-import cli.Main;
 import webserver.WebServer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 
 public class Config implements Runnable {
+    public volatile static int serverState;
+
+    public static synchronized void setServerState(int serverState){
+        Config.serverState = serverState;
+    }
+
     public ServerSocket getServerSocket() {
         return serverSocket;
     }
@@ -22,7 +27,7 @@ public class Config implements Runnable {
             serverSocket = new ServerSocket(12345);
             System.out.println("Connection Socket Created");
             try {
-                while (Main.serverState == 1) {
+                while (serverState == 1) {
                     new WebServer(serverSocket.accept(), false);
                 }
             } catch (IOException e) {
@@ -48,7 +53,7 @@ public class Config implements Runnable {
             serverSocket = new ServerSocket(12345);
             System.out.println("Connection Socket Created");
             try {
-                while (Main.serverState == 2) {
+                while (serverState == 2) {
                     new WebServer(serverSocket.accept(), true);
                 }
             } catch (IOException e) {
@@ -82,16 +87,16 @@ public class Config implements Runnable {
     @Override
     public void run() {
         while(true){
-            if (Main.serverState == 1){
+            if (serverState == 1){
                 startServer();
             }
-            if (Main.serverState == 2){
+            if (serverState == 2){
                 activateMaintenanceMode();
             }
-            if(Main.serverState == 3){
+            if(serverState == 3){
                 stopServer();
             }
-            if(Main.serverState == 4){
+            if(serverState == 4){
                 break;
             }
         }
