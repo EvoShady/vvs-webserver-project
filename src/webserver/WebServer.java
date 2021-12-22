@@ -8,8 +8,8 @@ public class WebServer extends Thread {
 
 	private String ROOT_DIRECTORY = "C:\\AC CTI\\An IV Sem I\\Sem I\\SSC\\vvs-webserver-project\\src\\TestSite\\";
 	private String MAINTENANCE_ROOT_DIRECTORY = "C:\\AC CTI\\An IV Sem I\\Sem I\\SSC\\vvs-webserver-project\\src\\TestSite\\";
-	static final String DEFAULT_FILE = "index.html";
-	static final String MAINTENANCE_FILE = "maintenance.html";
+	public static final String DEFAULT_FILE = "index.html";
+	public static final String MAINTENANCE_FILE = "maintenance.html";
 	private volatile boolean maintenanceMode;
 
 	public WebServer() {
@@ -143,4 +143,5 @@ public class WebServer extends Thread {
 	public void setMAINTENANCE_ROOT_DIRECTORY(String MAINTENANCE_ROOT_DIRECTORY) {
 		this.MAINTENANCE_ROOT_DIRECTORY = MAINTENANCE_ROOT_DIRECTORY;
 	}
+
 }

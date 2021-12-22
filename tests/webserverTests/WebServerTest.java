@@ -45,28 +45,32 @@ public class WebServerTest {
 
     @Test
     public void worksWithHtmlTerminatedString(){
-        assertEquals("test.html", webServer.determineServerServingPage("test.html"));
+        String s = "test.html";
+        assertEquals(webServer.getROOT_DIRECTORY() + s, webServer.determineServerServingPage(s));
     }
 
     @Test
     public void worksWithNotExtensionTerminatedString(){
-        assertEquals("test2.html", webServer.determineServerServingPage("test2"));
+        String s = "test2";
+        String ext = ".html";
+        assertEquals(webServer.getROOT_DIRECTORY() + s + ext, webServer.determineServerServingPage(s));
     }
 
     @Test
     public void worksWithJpgs(){
-        assertEquals("test3.jpg", webServer.determineServerServingPage("test3.jpg"));
+        String s = "test3.jpg";
+        assertEquals(webServer.getROOT_DIRECTORY() + s, webServer.determineServerServingPage(s));
     }
 
     @Test
     public void worksInMaintenanceMode(){
         webServer.setMaintenanceMode(true);
-        assertEquals("/maintenance.html", webServer.determineServerServingPage("test4.jpg"));
+        assertEquals(webServer.getMAINTENANCE_ROOT_DIRECTORY() + WebServer.MAINTENANCE_FILE, webServer.determineServerServingPage("test4.jpg"));
     }
 
     @Test
     public void worksInDefaultMode(){
-        assertEquals("/index.html", webServer.determineServerServingPage("/"));
+        assertEquals(webServer.getROOT_DIRECTORY() + WebServer.DEFAULT_FILE, webServer.determineServerServingPage("/"));
     }
 
     @Test (expected = NullPointerException.class)
