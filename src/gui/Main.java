@@ -14,7 +14,7 @@ public class Main {
 
         // INFO
         JPanel infoPanel = new JPanel();
-        infoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        infoPanel.setBorder(BorderFactory.createTitledBorder("WebServer Info"));
         infoPanel.setLayout(new GridLayout(3, 2));
         Label serverStatus = new Label("Server Status: ");
         infoPanel.add(serverStatus);
@@ -31,7 +31,7 @@ public class Main {
 
         // BUTTONS
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        buttonPanel.setBorder(BorderFactory.createTitledBorder("WebServer Control"));
         buttonPanel.setLayout(new GridLayout(0, 1));
         JButton startServerButton = new JButton("Start Server");
         buttonPanel.add(startServerButton);
@@ -42,14 +42,14 @@ public class Main {
 
         // INFO AND BUTTON PANEL
         JPanel infoAndButtonPanel = new JPanel();
-        buttonPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        infoAndButtonPanel.setBorder(BorderFactory.createEmptyBorder());
         infoAndButtonPanel.add(infoPanel);
         infoAndButtonPanel.add(buttonPanel);
         generalPanel.add(infoAndButtonPanel);
 
         // CONFIG
         JPanel configPanel = new JPanel();
-        configPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        configPanel.setBorder(BorderFactory.createTitledBorder("WebServer Configuration"));
         configPanel.setLayout(new GridLayout(3, 2));
         Label serverPortListening = new Label("Server Listening On Port ");
         configPanel.add(serverPortListening);

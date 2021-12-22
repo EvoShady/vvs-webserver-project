@@ -7,6 +7,15 @@ import java.net.ServerSocket;
 
 public class Config implements Runnable {
     public volatile static int serverState;
+    private int port = 12345;
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
 
     public static synchronized void setServerState(int serverState){
         Config.serverState = serverState;
@@ -24,7 +33,8 @@ public class Config implements Runnable {
 
     public void startServer(){
         try {
-            serverSocket = new ServerSocket(12345);
+            serverSocket = new ServerSocket(port);
+
             System.out.println("Connection Socket Created");
             try {
                 while (serverState == 1) {
@@ -35,14 +45,14 @@ public class Config implements Runnable {
                 throw new RuntimeException();
             }
         } catch (IOException e) {
-            System.err.println("Could not listen on port: 12345.");
+            System.err.println("Could not listen on port: " + port);
             throw new RuntimeException();
         } finally {
             try {
                 serverSocket.close();
                 System.out.println("Server Closed");
             } catch (IOException e) {
-                System.err.println("Could not close port: 12345.");
+                System.err.println("Could not close port: " + port);
                 throw new RuntimeException();
             }
         }
@@ -50,7 +60,7 @@ public class Config implements Runnable {
 
     public void activateMaintenanceMode(){
         try {
-            serverSocket = new ServerSocket(12345);
+            serverSocket = new ServerSocket(port);
             System.out.println("Connection Socket Created");
             try {
                 while (serverState == 2) {
@@ -61,7 +71,7 @@ public class Config implements Runnable {
                 throw new RuntimeException();
             }
         } catch (IOException e) {
-            System.err.println("Could not listen on port: 12345.");
+            System.err.println("Could not listen on port: " + port);
             throw new RuntimeException();
         }
         finally {
@@ -69,7 +79,7 @@ public class Config implements Runnable {
                 serverSocket.close();
                 System.out.println("Server Closed");
             } catch (IOException e) {
-                System.err.println("Could not close port: 12345.");
+                System.err.println("Could not close port: " + port);
                 throw new RuntimeException();
             }
         }
@@ -79,7 +89,7 @@ public class Config implements Runnable {
         try {
             serverSocket.close();
         } catch (IOException e) {
-            System.err.println("Could not close port: 12345.");
+            System.err.println("Could not close port: " + port);
             throw new RuntimeException();
         }
     }
