@@ -5,7 +5,15 @@ import java.awt.*;
 
 public class Main {
 
+    public static void main(String[] args) {
+        new Main();
+    }
+
     public Main(){
+        initializeUI();
+    }
+
+    public void initializeUI(){
         JFrame frame = new JFrame();
 
         JPanel generalPanel = new JPanel();
@@ -50,19 +58,36 @@ public class Main {
         // CONFIG
         JPanel configPanel = new JPanel();
         configPanel.setBorder(BorderFactory.createTitledBorder("WebServer Configuration"));
-        configPanel.setLayout(new GridLayout(3, 2));
+        configPanel.setLayout(new GridLayout(0, 1));
+        // PORT
+        JPanel portPanel = new JPanel();
+        portPanel.setBorder(BorderFactory.createEmptyBorder());
         Label serverPortListening = new Label("Server Listening On Port ");
-        configPanel.add(serverPortListening);
+        portPanel.add(serverPortListening);
         TextField serverPortListeningTextField = new TextField("12345");
-        configPanel.add(serverPortListeningTextField);
+        portPanel.add(serverPortListeningTextField);
+        configPanel.add(portPanel);
+        // ROOT DIRECTORY
+        JPanel checkRootDirectoryPanel = new JPanel();
+        checkRootDirectoryPanel.setBorder(BorderFactory.createEmptyBorder());
         Label serverWebRootDirectory = new Label("Server Web Root Directory ");
-        configPanel.add(serverWebRootDirectory);
-        TextField serverWebRootDirectoryTextField = new TextField("yes");
-        configPanel.add(serverWebRootDirectoryTextField);
+        checkRootDirectoryPanel.add(serverWebRootDirectory);
+        TextField serverWebRootDirectoryTextField = new TextField("C:\\AC CTI\\An IV Sem I\\Sem I\\SSC\\vvs-webserver-project\\src\\TestSite\\");
+        checkRootDirectoryPanel.add(serverWebRootDirectoryTextField);
+        JButton checkRootDirectoryButton = new JButton("Check Path");
+        checkRootDirectoryPanel.add(checkRootDirectoryButton);
+        configPanel.add(checkRootDirectoryPanel);
+        // MAINTENANCE DIRECTORY
+        JPanel checkMaintenanceDirectoryPanel = new JPanel();
+        checkMaintenanceDirectoryPanel.setBorder(BorderFactory.createEmptyBorder());
         Label serverMaintenanceDirectory = new Label("Server Maintenance Directory ");
-        configPanel.add(serverMaintenanceDirectory);
-        TextField serverMaintenanceDirectoryTextField = new TextField("yes");
-        configPanel.add(serverMaintenanceDirectoryTextField);
+        checkMaintenanceDirectoryPanel.add(serverMaintenanceDirectory);
+        TextField serverMaintenanceDirectoryTextField = new TextField("C:\\AC CTI\\An IV Sem I\\Sem I\\SSC\\vvs-webserver-project\\src\\TestSite\\");
+        checkMaintenanceDirectoryPanel.add(serverMaintenanceDirectoryTextField);
+        JButton checkMaintenanceDirectoryButton = new JButton("Check Path");
+        checkMaintenanceDirectoryPanel.add(checkMaintenanceDirectoryButton);
+        configPanel.add(checkMaintenanceDirectoryPanel);
+
         generalPanel.add(configPanel);
 
         frame.add(generalPanel, BorderLayout.CENTER);
@@ -71,9 +96,4 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
     }
-
-    public static void main(String[] args) {
-        new Main();
-    }
-
 }
