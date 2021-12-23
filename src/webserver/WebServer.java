@@ -6,8 +6,8 @@ import java.io.*;
 public class WebServer extends Thread {
 	protected Socket clientSocket;
 
-	private String ROOT_DIRECTORY = "C:\\AC CTI\\An IV Sem I\\Sem I\\SSC\\vvs-webserver-project\\src\\TestSite\\";
-	private String MAINTENANCE_ROOT_DIRECTORY = "C:\\AC CTI\\An IV Sem I\\Sem I\\SSC\\vvs-webserver-project\\src\\TestSite\\";
+	public static String ROOT_DIRECTORY = "C:\\AC CTI\\An IV Sem I\\Sem I\\SSC\\vvs-webserver-project\\src\\TestSite\\";
+	public static String MAINTENANCE_ROOT_DIRECTORY = "C:\\AC CTI\\An IV Sem I\\Sem I\\SSC\\vvs-webserver-project\\src\\TestSite\\";
 	public static final String DEFAULT_FILE = "index.html";
 	public static final String MAINTENANCE_FILE = "maintenance.html";
 	private volatile boolean maintenanceMode;
