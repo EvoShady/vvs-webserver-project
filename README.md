@@ -3,29 +3,26 @@
 # Part 1
 Legend:
 
-✓ -> done
-
-x -> not done
-
+✓ -> done  
+x -> not done  
 ~ -> partially done
 
 # Implementation:
 - Webserver ✓
 - Config - CLI ✓
-- GUI x
+- GUI ✓
 
 # Tests classes implemented:
 - ReadKeyTest ✓
 - mainTest ~
 - configTest ~
-- guiTests x
+- guiTests ~
 - WebServerTest ~
 
 Current code coverage: 40.7%
 ![Code_Coverage_Image](resources/images/current_code_coverage.PNG)
-Status: need help.
 
-Nu am reusit sa fac asa multe teste unitare deoarece nu stiu exact cum ar trebuii sa testez cazurile in care apar metode de multithreading/blocking din codul meu, poate ar trebuii refactorizat si as dorii feedback daca se poate. Multumesc!
+Reason: Should modify WebServer class to make it more testable.
 
 # Part 2 - Updated 26/11/2021
 
@@ -41,6 +38,18 @@ Dynamic Analysis - First Run (Visual VM).
 Dynamic Analysis - Graph after: starting server -> maintain mode activated -> stop server (Visual VM).
 ![visual_vm_2](resources/images/visual_vm_2.PNG)
 
-Conclusions after dynamic analysis: No memory leaks found, memory usage seems alright, number of threads seems high, same for cpu usage before starting server ( didn't found a fix yet ).
+Conclusions after dynamic analysis: No memory leaks found, memory and cpu usage seems alright, number of threads seems fine.
 
-# Part 3 - Update (soon)
+# Part 3 - Updated 26/12/2021
+
+ - Finished Implementing GUI
+ - Finished 10 tests with Marathon for GUI
+
+Default GUI:
+![default_gui](resources/images/defaultGui.PNG)
+
+Marathon Tests:
+![marathonGuiTesting](resources/images/marathonGuiTesting.PNG)
+
+Example of Marathon Test:
+![marathonGuiTestExample](resources/images/guiTestExample.PNG)
