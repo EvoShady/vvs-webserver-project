@@ -16,7 +16,7 @@ x -> not done
 - ReadKeyTest ✓
 - mainTest ~
 - configTest ~
-- guiTests ~
+- webTesting ~
 - WebServerTest ~
 
 Current code coverage: 40.7%
@@ -53,3 +53,11 @@ Marathon Tests:
 
 Example of Marathon Test:
 ![marathonGuiTestExample](resources/images/guiTestExample.PNG)
+
+WebTesting
+
+Creating template for site in Selenium (Google Chrome):
+![seleniumWebTestingForBasicSite](resources/images/seleniumWebTestingForBasicSite.PNG)
+
+Added tests from Selenium to Intellij:
+![exportedTestsFromSeleniumToIntellij](resources/images/exportedTestsFromSeleniumToIntellij.PNG)
