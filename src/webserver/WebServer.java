@@ -5,8 +5,11 @@ import java.io.*;
 
 public class WebServer extends Thread {
 	protected Socket clientSocket;
-	static final String DEFAULT_FILE = "/index.html";
-	static final String MAINTENANCE_FILE = "/maintenance.html";
+
+	public static String ROOT_DIRECTORY = "C:\\AC CTI\\An IV Sem I\\Sem I\\SSC\\vvs-webserver-project\\src\\TestSite\\";
+	public static String MAINTENANCE_ROOT_DIRECTORY = "C:\\AC CTI\\An IV Sem I\\Sem I\\SSC\\vvs-webserver-project\\src\\TestSite\\";
+	public static final String DEFAULT_FILE = "index.html";
+	public static final String MAINTENANCE_FILE = "maintenance.html";
 	private volatile boolean maintenanceMode;
 
 	public WebServer() {
@@ -50,7 +53,7 @@ public class WebServer extends Thread {
 
 			fileRequested = determineServerServingPage(requestArray[1]);
 
-			File file = new File("src/TestSite" + fileRequested);
+			File file = new File(fileRequested);
 			int fileLength = (int) file.length();
 
 			byte[] fileData = readFile(file, fileLength);
@@ -66,6 +69,9 @@ public class WebServer extends Thread {
 			in.close();
 			clientSocket.close();
 		} catch (FileNotFoundException fileNotFoundException) {
+			out.println("HTTP/1.0 404 Not Found\r\n"+
+					"Content-type: text/html\r\n\r\n"+
+					"<html><head></head><body> 404 File Not Found</body></html>\n");
 			try {
 				fileNotFound(out, dataOut, fileRequested);
 			} catch (IOException ioe) {
@@ -94,23 +100,21 @@ public class WebServer extends Thread {
 
 	public String determineServerServingPage(String s) {
 		if (maintenanceMode){
-			return MAINTENANCE_FILE;
+			return MAINTENANCE_ROOT_DIRECTORY + MAINTENANCE_FILE;
 		}
 		if (s.equals("/")){
-			return DEFAULT_FILE;
+			return ROOT_DIRECTORY + DEFAULT_FILE;
 		}
 		if(s.endsWith(".html") || s.endsWith(".jpg") || s.endsWith(".txt")) {
-			return s;
+			return ROOT_DIRECTORY + s;
 		}
-		return s + ".html";
+		return ROOT_DIRECTORY + s + ".html";
 	}
 
 	public void fileNotFound(PrintWriter out, OutputStream dataOut, String fileRequested) throws IOException {
 		File file = new File(fileRequested);
 		int fileLength = (int) file.length();
 		byte[] fileData = readFile(file, fileLength);
-
-		out.println("HTTP/1.0 404 File Not Found\n");
 
 		dataOut.write(fileData, 0, fileLength);
 		dataOut.flush();
@@ -123,4 +127,21 @@ public class WebServer extends Thread {
 	public void setMaintenanceMode(boolean maintenanceMode) {
 		this.maintenanceMode = maintenanceMode;
 	}
+
+	public String getROOT_DIRECTORY() {
+		return ROOT_DIRECTORY;
+	}
+
+	public void setROOT_DIRECTORY(String ROOT_DIRECTORY) {
+		this.ROOT_DIRECTORY = ROOT_DIRECTORY;
+	}
+
+	public String getMAINTENANCE_ROOT_DIRECTORY() {
+		return MAINTENANCE_ROOT_DIRECTORY;
+	}
+
+	public void setMAINTENANCE_ROOT_DIRECTORY(String MAINTENANCE_ROOT_DIRECTORY) {
+		this.MAINTENANCE_ROOT_DIRECTORY = MAINTENANCE_ROOT_DIRECTORY;
+	}
+
 }

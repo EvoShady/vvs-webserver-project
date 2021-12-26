@@ -1,5 +1,7 @@
 package cli;
 
+import config.Config;
+
 import java.util.Scanner;
 
 public class ReadKey implements Runnable {
@@ -23,7 +25,7 @@ public class ReadKey implements Runnable {
 
             Scanner scan = new Scanner(System.in);
             int choice = scan.nextInt();
-            Main.setServerState(choice);
+            Config.setServerState(choice);
 
             if (choice == 4)
                 break;
