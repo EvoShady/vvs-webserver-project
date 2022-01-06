@@ -32,10 +32,10 @@ public class CheckTextInIndexPageTest {
     // Test name: Check Text In Index Page
     // Step # | name | target | value
     // 1 | open | / | 
-    driver.get("http://localhost:12345/");
+    driver.get("http://localhost:12350/");
     // 2 | verifyText | css=div | Hello, It works !!!\ndo external links work?\ndo simple relative internal links work?\ndo general relative links work\ndo simple absolute links work\ndo general absolute links work\ndo TXT files work
     assertThat(driver.findElement(By.cssSelector("div")).getText(), is("Hello, It works !!!\\ndo external links work?\\ndo simple relative internal links work?\\ndo general relative links work\\ndo simple absolute links work\\ndo general absolute links work\\ndo TXT files work"));
-    // 3 | click | linkText=do simple relative internal links work? | 
+    // 3 | click | linkText=do simple relative internal links work? |
     driver.findElement(By.linkText("do simple relative internal links work?")).click();
     // 4 | verifyText | linkText=back | back
     assertThat(driver.findElement(By.linkText("back")).getText(), is("back"));

@@ -33,13 +33,13 @@ public class GeneralRedirectTestTest {
     // Test name: General Redirect Test
     // Step # | name | target | value
     // 1 | open | / | 
-    driver.get("http://localhost:12345/");
+    driver.get("http://localhost:12350/");
     // 2 | setWindowSize | 1058x812 | 
     driver.manage().window().setSize(new Dimension(1058, 812));
     // 3 | click | linkText=do external links work? | 
     driver.findElement(By.linkText("do external links work?")).click();
     // 4 | open | / | 
-    driver.get("http://localhost:12345/");
+    driver.get("http://localhost:12350/");
     // 5 | click | linkText=do simple relative internal links work? | 
     driver.findElement(By.linkText("do simple relative internal links work?")).click();
     // 6 | click | linkText=back | 
@@ -59,6 +59,6 @@ public class GeneralRedirectTestTest {
     // 13 | click | linkText=do TXT files work | 
     driver.findElement(By.linkText("do TXT files work")).click();
     // 14 | open | / | 
-    driver.get("http://localhost:12345/");
+    driver.get("http://localhost:12350/");
   }
 }
